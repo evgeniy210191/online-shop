@@ -8,7 +8,7 @@ export default class OnlineStorePage {
     this.products = [];
     this.pageSize = 9
     this.url = new URL('products',BACKEND_URL)
-    this.url.searchParams.set('_limit', pageSize)
+    this.url.searchParams.set('_limit', this.pageSize)
 
     this.components = {};
 
@@ -17,7 +17,7 @@ export default class OnlineStorePage {
     this.renderComponents();
     this.initEventListeners()
     this.loadData()
-    this.updata(1)
+    this.update(1)
   }
 async loadData(pageNumber) {
   this.url.searchParams.set('_page', pageNumber)
