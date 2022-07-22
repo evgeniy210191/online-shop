@@ -12,6 +12,7 @@ export default class Pagination {
   }
 
   getTempLate () {
+    
     return `
       <nav>
         <a href="#" data-element="nav-prev" class="page_link prev">
@@ -28,6 +29,7 @@ export default class Pagination {
       </nav>
     `;
   }
+ 
 
   getPages() {
     return `
@@ -81,7 +83,7 @@ export default class Pagination {
 	render() {
     const addPagination = document.createElement('div')
     addPagination.innerHTML = this.getTempLate()
-    this.element = addPagination
+    this.element = addPagination.firstElementChild
   }
   addEventListeners() {
     const prevPageBtn = this.element.querySelector('[data-element="nav-prev"]')
@@ -110,6 +112,4 @@ export default class Pagination {
       })
       this.element.dispatchEvent(customEvent)
     }
-  
-  
 }
