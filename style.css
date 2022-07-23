@@ -69,36 +69,14 @@ body{
     z-index: 10;
     overflow-y: scroll;
 }
-.close {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-}
-.close p{
-    width: 20px;
-    height: 20px;
-    padding: 10px;
-    position: relative;
-    cursor: pointer;
-}
-.close span{
-    width: 50%;
-    height: 2px;
-    background: black;
-    display: block;
-    transform:rotate(45deg);
-    position: absolute;
-    top: 50%;
-}
-.close span+span{
-    transform: rotate(-45deg);
+.filter p{
+    font-size: 20px;
+    display: inline-block;
 }
 .cart_container {
     padding: 10px;
 }
-.list_product>li {
 
-}
 .footer {
     display: flex;
     flex-direction: column;
@@ -108,8 +86,7 @@ body{
     padding: 10px;
     font-size: 14px;
 }
-.sum {}
-.sum_price {}
+
 .order_product>button {
     background: #7e72f2;
     width: 200px;
@@ -194,16 +171,24 @@ h1{
     cursor:pointer;
     display: none;
 }
-.filter:active .burger{
+
+.active.burger{
     width:0;
 }
-.filter:active .burger_menu::before{
+
+.active.burger_menu::before{
     transform: rotate(45deg);
-    transform-origin: 0 0;
+    transform-origin: 1px 1px;
+    height:2px;
 }
-.filter:active .burger_menu::after{
+
+.active.burger_menu::after{
     transform: rotate(-45deg);
-    transform-origin: 0 0;
+    transform-origin: 0 1px;
+    height:2px;
+}
+.active.burger_menu{
+    transform: translateX(4px)
 }
 .filter>p{
     display: inline-block;    
@@ -592,9 +577,7 @@ nav .page_link:hover, .page_link.active{
     nav li:nth-child(n+4){
         display:none;
     }
-    nav li:last-child{
-        display:block;
-    }
+
 }
 @media (max-width:900px){
     .container_right{
@@ -621,7 +604,17 @@ nav .page_link:hover, .page_link.active{
         width: 100%;
     }
     .container_left{
+        top:140px;
+        left:0;
+        width:100%;
+        margin:0 auto;
+
+    }
+    .filter_element{
         display: none;
+    }
+    .substrate{
+        display:none
     }
     .container{
         flex-direction: column;

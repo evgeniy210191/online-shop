@@ -7,6 +7,7 @@ import FilterCategory from "./filterCategory.js"
 import FilterBrand from "./filterbrand.js"
 import FilterRating from "./filterRating.js"
 import Header from "./header.js"
+import Filter from "./filter.js"
 
 const BACKEND_URL = 'https://online-store.bootcamp.place/api/'
 
@@ -41,7 +42,9 @@ return products
       </h1>
     </header>
     <main class="container">
-      <aside class="container_left">
+      <div class="filter" data-element="filter">
+      </div>
+      <aside class="container_left filter_element">
       <div class="container_filters">
           <!-- filters -->
           <div data-element="filterPrice" class="price" >
@@ -55,7 +58,7 @@ return products
         </div>
         <button data-element="button-filter">clear all filters</button>
       </aside>
-      <div class="container_right">
+      <div class="container_right //substrate//">
         <div data-element="searchBox" class="container_search">
           <!-- search component -->
         </div>
@@ -74,6 +77,7 @@ return products
     const totalElements = 100
     const totalPages = Math.ceil(totalElements / this.pageSize);
 
+    const filter = new Filter
     const header = new Header
     const filterRating = new FilterRating
     const filterBrand = new FilterBrand
@@ -86,6 +90,7 @@ return products
       totalPages
     });
    
+    this.components.filter = filter
     this.components.header = header
     this.components.filterRating = filterRating
     this.components.filterBrand = filterBrand
@@ -98,6 +103,7 @@ return products
   }
 
   renderComponents () {
+    const filterBox = this.element.querySelector('[data-element="filter"]')
     const headerContainer = this.element.querySelector('[data-element="header"]')
     const filterRatingContainer = this.element.querySelector('[data-element="filterRating"]')
     const filterCategoryContainer = this.element.querySelector('[data-element="filterCategory"]');
@@ -107,6 +113,7 @@ return products
     const cardsContainer = this.element.querySelector('[data-element="cardsList"]');
     const paginationContainer = this.element.querySelector('[data-element="pagination"]');
    
+    filterBox.append(this.components.filter.element)
     headerContainer.append(this.components.header.element)
     filterRatingContainer.append(this.components.filterRating.element)
     filterBrandContainer.append(this.components.filterBrand.element)
