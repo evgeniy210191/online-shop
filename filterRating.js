@@ -13,8 +13,7 @@ export default class FilterRating {
             <span class="renge_slide__right"></span>
           </div>
           <span class="max"><span>5</span></span>
-        </div>
-        `
+        </div>`
     }
     myRender() {
         const box = document.createElement('div')
