@@ -135,7 +135,7 @@ return products
   }
   initEventListeners() {
     this.components.pagination.element.addEventListener('page-changed', event => {
-      const pageIndex = event.detail;
+      const pageIndex = Number(event.detail);
       this.update(pageIndex + 1)
 
     });
