@@ -5,9 +5,7 @@ export default class Filter {
     render() {
         return`
         <p>FILTERS</p>
-        <p class="burger_menu active">
-          <span class="burger active"></span>
-        </p>`
+        `
     }
     myRender() {
         const box = document.createElement('div')

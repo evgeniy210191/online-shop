@@ -44,9 +44,11 @@ return products
     <main class="container">
       <div class="filter" data-element="filter">
       </div>
-      <aside class="container_left filter_element">
+      <aside class="container_left filter_element filter_element_none" id="filter">
       <div class="container_filters">
-          <!-- filters -->
+          <p class="burger_menu" data-element="burger_menu">
+            <span class="burger"></span>
+          </p>
           <div data-element="filterPrice" class="price" >
           </div>
           <div data-element="filterCategory" class="category sort" >
@@ -71,6 +73,7 @@ return products
       </div>
     </main>
     `;
+
   }
 
   initComponents () {
@@ -123,6 +126,20 @@ return products
     cardsContainer.append(this.components.cardList.element);
     paginationContainer.append(this.components.pagination.element);
     
+    const filters = this.element.querySelector('#filter')
+    const burger = this.element.querySelector('[data-element="burger_menu"]')
+    const classWrapper = document.querySelector('.wrapper')
+
+    filterBox.onclick = function (event) {
+      filters.classList.remove('filter_element_none')
+      classWrapper.classList.add('adaptiw_wrap')
+      document.body.classList.add('stop')
+    }
+    burger.onclick = function (event) {
+      filters.classList.add('filter_element_none')
+      classWrapper.classList.remove('adaptiw_wrap')
+      document.body.classList.remove('stop')
+    }
   }
 
 
