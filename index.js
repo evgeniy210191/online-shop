@@ -9,24 +9,125 @@ import FilterRating from "./filterRating.js"
 import Header from "./header.js"
 import Filter from "./filter.js"
 
+const obj = [
+	{
+	  "id": "76w0hz7015kkr9kjkav",
+	  "title": "Ноутбук Acer Aspire 3 A315-57G-336G (NX.HZREU.01S) Charcoal Black",
+	  "rating": 2.89,
+	  "price": 15999,
+	  "category": "laptops",
+	  "brand": "acer"
+	},
+	 {
+	    "id": "76w0hz7015kkr9kjkav",
+	    "images": [
+	      "https://content2.rozetka.com.ua/goods/images/big_tile/163399632.jpg",
+	      "https://content.rozetka.com.ua/goods/images/big_tile/163399633.jpg"
+	    ],
+	    "title": "Ноутбук Acer Aspire 3 A315-57G-336G (NX.HZREU.01S) Charcoal Black",
+	    "rating": 2.89,
+	    "price": 15999,
+	    "category": "laptops",
+	    "brand": "acer"
+	  },
+	  {
+	    "id": "qeagrlm9lrkr9kjkav",
+	    "images": [
+	      "https://content1.rozetka.com.ua/goods/images/big_tile/178060622.jpg",
+	      "https://content2.rozetka.com.ua/goods/images/big_tile/178060625.jpg"
+	    ],
+	    "title": "Ноутбук Acer Aspire 7 A715-41G-R9KP (NH.Q8QEU.00L) Charcoal Black",
+	    "rating": 1.96,
+	    "price": 21500,
+	    "category": "laptops",
+	    "brand": "acer"
+	  },
+	  {
+	    "id": "3xaz1nx5a9lkr9kjkav",
+	    "images": [
+	      "https://content.rozetka.com.ua/goods/images/big_tile/26635597.jpg"
+	    ],
+	    "title": "Монитор 24.1\" Dell P2421 Black (210-AWLE)",
+	    "rating": 1.43,
+	    "price": 6900,
+	    "category": "monitors",
+	    "brand": "dell"
+	  },
+	  {
+	    "id": "4l150fmw7yekr9kjkav",
+	    "images": [
+	      "https://content2.rozetka.com.ua/goods/images/big_tile/9559719.jpg"
+	    ],
+	    "title": "Монитор 23.8\" Dell E2421HN Black (210-AXMC)",
+	    "rating": 3.43,
+	    "price": 3900,
+	    "category": "monitors",
+	    "brand": "dell"
+	  },
+	    {
+	    "id": "kub9vo3i3hckr9kjkav",
+	    "images": [
+	      "https://content.rozetka.com.ua/goods/images/big_tile/165161262.jpg",
+	      "https://content1.rozetka.com.ua/goods/images/big_tile/165161264.jpg"
+	    ],
+	    "title": "Asus PCI-Ex Radeon RX 6700 XT Dual 12GB GDDR6 (192bit) (HDMI, 3 x DisplayPort) (DUAL-RX6700XT-12G)",
+	    "rating": 2.04,
+	    "price": 28000,
+	    "category": "video_cards",
+	    "brand": "asus"
+	  },
+	  {
+	    "id": "mnrntvpjpupkr9kjkav",
+	    "images": [
+	      "https://content1.rozetka.com.ua/goods/images/big_tile/31959984.jpg",
+	      "https://content.rozetka.com.ua/goods/images/big_tile/31960011.jpg"
+	    ],
+	    "title": "Asus PCI-Ex GeForce RTX 3080 TUF Gaming OC 10GB GDDR6X (320bit) (1440/19000) (2 x HDMI, 3 x DisplayPort) (TUF-RTX3080-O10G-GAMING)",
+	    "rating": 3.86,
+	    "price": 64500,
+	    "category": "video_cards",
+	    "brand": "asus"
+	  }
+]
+
 const BACKEND_URL = 'https://online-store.bootcamp.place/api/'
+const FULL_URL = 'https://online-store.bootcamp.place/api/products'
 
 export default class OnlineStorePage {
-  constructor () {
+  constructor (someFilter = []) {
     this.products = [];
     this.pageSize = 9
     this.url = new URL('products',BACKEND_URL)
     this.url.searchParams.set('_limit', this.pageSize)
-
     this.components = {};
-
+    this.someFilter = someFilter
     this.initComponents();
     this.render();
     this.renderComponents();
     this.initEventListeners()
     this.loadData()
     this.update(1)
+    this.getData ()
+    
   }
+  getData () {
+    const request = new XMLHttpRequest
+    
+    request.open('GET', FULL_URL)
+    request.onreadystatechange = function (event) {
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status <= 399) {
+          const someFilter = JSON.parse(this.responseText)
+          this.someFilter = someFilter
+        }
+      }
+    }
+    request.send()
+    console.log(request)
+    return request
+  }
+
+
 async loadData(pageNumber) {
   this.url.searchParams.set('_page', pageNumber)
         const response = await fetch(this.url)
@@ -77,14 +178,16 @@ return products
   }
 
   initComponents () {
+    
     const totalElements = 100
     const totalPages = Math.ceil(totalElements / this.pageSize);
 
     const filter = new Filter
     const header = new Header
     const filterRating = new FilterRating
-    const filterBrand = new FilterBrand
-    const filterCategory = new FilterCategory
+    const filterBrand = new FilterBrand(obj)
+    console.log(filterBrand)
+    const filterCategory = new FilterCategory(this.someFilter)
     const filterPrice = new FilterPrice
     const searchBox = new SearchBox
     const cardList = new CardsList(this.products);
@@ -103,6 +206,17 @@ return products
     this.components.cardList = cardList;
     this.components.pagination = pagination;
     
+    const request = new XMLHttpRequest
+    
+    request.open('GET', FULL_URL)
+    request.onreadystatechange = function (event) {
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status <= 399) {
+          this.responseText
+        }
+      }
+    }
+    request.send()
   }
 
   renderComponents () {

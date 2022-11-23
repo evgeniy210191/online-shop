@@ -50,12 +50,13 @@ export default class Pagination {
   }
 
   setPage(pageIndex = 0) {
+    const activePage = this.element.querySelector('.page_link.active');
     if (pageIndex === this.activePageIndex) return;
     if (pageIndex > this.totalPages - 1 || pageIndex < 0) return;
 
     this.dispatchEvent(pageIndex)
 
-    const activePage = this.element.querySelector('.page_link.active');
+    
 
     if (activePage) {
       activePage.classList.remove('active');
@@ -67,11 +68,15 @@ export default class Pagination {
     }
 
     this.activePageIndex = pageIndex
+    
+    
+    
   }
 
   nextPage() {
     const nextPageIndex = this.activePageIndex + 1;
     this.setPage(nextPageIndex)
+
   }
 
   prevPage() {

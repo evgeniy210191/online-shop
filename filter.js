@@ -1,3 +1,4 @@
+
 export default class Filter {
     constructor () {
         this.myRender()
